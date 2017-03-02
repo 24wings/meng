@@ -1,24 +1,28 @@
 {
-    "name": "test",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "ts-node app",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@types/body-parser": "^0.0.34",
-        "@types/express": "^4.0.35",
-        "@types/mongoose": "^4.7.7",
-        "@types/reflect-metadata": "^0.0.5",
-        "@types/sha1": "^1.1.0",
-        "body-parser": "^1.17.0",
-        "express": "^4.15.0",
-        "mongoose": "^4.8.5",
-        "reflect-metadata": "^0.1.10",
-        "sha1": "^1.1.1"
-    }
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^0.0.34",
+    "@types/express": "^4.0.35",
+    "@types/koa": "^2.0.38",
+    "@types/koa-router": "^7.0.21",
+    "@types/mongoose": "^4.7.7",
+    "@types/reflect-metadata": "^0.0.5",
+    "@types/sha1": "^1.1.0",
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0",
+    "koa": "^2.0.1",
+    "koa-router": "^7.0.1",
+    "mongoose": "^4.8.5",
+    "reflect-metadata": "^0.1.10",
+    "sha1": "^1.1.1"
+  }
 }

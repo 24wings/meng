@@ -1,4 +1,4 @@
-import * as express from "express";
+import * as koa from "koa";
 import { Route } from '../Route';
 import { IRoute } from './interface/Route';
 import { playerService } from '../db';
@@ -6,14 +6,12 @@ import { playerService } from '../db';
     path: '/player'
 })
 export class PlayerRoute extends IRoute {
-    delete(){
+    delete() {
 
     }
 
-    async index(req: express.Request, res: express.Response, next: express.NextFunction) {
-        
-       var all =await playerService.all();
-       res.json(all);
+    index(ctx: koa.Context, next: koa.Middleware) {
+        ctx.body = "index";
     }
     public hello() {
 

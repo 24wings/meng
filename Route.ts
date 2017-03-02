@@ -1,15 +1,11 @@
 import { IRoute } from './route/interface/Route';
-
-export function Route(option: {
-    /**
-     * 业务api
-     * 
-     * @type {String}
-     */
-    path: String
-}) {
+import { Server } from './app';
+var allRoutes = [];
+export { allRoutes };
+export function Route(option: { path: String }) {
     return (target: new () => IRoute) => {
         Reflect.defineMetadata('route', option, target);
-
+        allRoutes.push(target);
     }
 }
+
