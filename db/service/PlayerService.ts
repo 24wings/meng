@@ -11,7 +11,7 @@ export class PlayerService<Player extends mongoose.Document> extends BaseService
     }
 
     all() {
-        return this._model.find().exec();
+        return this.retrive();
     }
 
 }  

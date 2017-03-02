@@ -32,7 +32,7 @@ export class BaseService<T extends mongoose.Document> implements Read<T>, Write<
     protected _model: mongoose.Model<mongoose.Document>;
 
     retrive() {
-        return this._model.find();
+        return this._model.find().exec();
     }
 
     constructor(model: mongoose.Model<mongoose.Document>) {

@@ -1,8 +1,4 @@
-
-
 import Mongoose = require("mongoose");
-// import Constants = require("./Constants");
-
 export class DataAccess {
     static mongooseInstance: any;
     static mongooseConnection: Mongoose.Connection;
@@ -19,7 +15,7 @@ export class DataAccess {
             console.log("Conectado ao mongodb.");
         });
 
-        this.mongooseInstance = Mongoose.connect("mongodb://localhost/love");
+        this.mongooseInstance = Mongoose.connect("mongodb://120.77.169.182/test");
         return this.mongooseInstance;
     }
 
