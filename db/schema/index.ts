@@ -1,1 +1,0 @@
-export { playerSchema, Player } from './PlayerSchema';
