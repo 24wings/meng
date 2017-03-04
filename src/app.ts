@@ -1,56 +1,25 @@
-
+import 'reflect-metadata';
 import express = require('express');
 import config = require('./app.config');
+import path = require('path');
 import debug = require('debug');
 import http = require('http');
 var serverLog = debug('server-log:');
+import { App, AppOptions } from './core/App';
+import { bootstrap, BootstrapMethod } from './core/Bootstrap';
+import { PlayerRoute, HeroRoute } from './route/index';
 
-serverLog('ok');
-console.log(config);
+
+
+
+@App({
+    port: 3000,
+    routes: [PlayerRoute],
+    bootstrap: BootstrapMethod.Express,
+    staticServer: path.resolve(__dirname, '../public'),
+    mongoUrl: "mongodb://120.77.169.182/test"
+})
 export class Server {
-    appConfig = config;
-    app: express.Application;
-    /**
-     * 应用程序启动入口
-     */
-    static bootstrap() {
-        return new Server();
-    }
-    /**
-     * 静态文件服务器
-     */
-    staticPublic() {
-        this.app.use(express.static(this.appConfig.staticServer));
-    }
-
-    runByHttp() {
-        var server = http.createServer(this.app);
-        server.listen(this.appConfig.port, () => {
-            serverLog('http-server is running on:' + this.appConfig.port);
-        });
-    }
-
-    runByExpress() {
-        this.app.listen(this.appConfig.port, () => {
-            serverLog('express-server is running on:' + this.appConfig.port);
-
-        });
-
-    }
-    constructor() {
-        this.app = express();
-        this.init();
-
-    }
-
-    init() {
-
-        this.staticPublic();
-        this.runByHttp();
-    }
-
-
-
 }
 
-Server.bootstrap();  
+bootstrap(Server); 

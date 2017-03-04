@@ -5,4 +5,3 @@ var AppConfig = {
     staticServer: path.resolve(__dirname, '../public')
 };
 module.exports = AppConfig;
-// yie 
