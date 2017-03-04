@@ -7,7 +7,7 @@ import http = require('http');
 var serverLog = debug('server-log:');
 import { App, AppOptions } from './core/App';
 import { bootstrap, BootstrapMethod } from './core/Bootstrap';
-import { PlayerRoute, HeroRoute } from './route/index';
+import { PlayerRoute } from './route/index';
 
 
 

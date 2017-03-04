@@ -6,6 +6,7 @@ interface Player extends mongoose.Document {
     _id: string;
     name: string;
     age: Number;
+    isFinishInfo: boolean;
 
 }
 
