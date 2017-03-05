@@ -3,3 +3,4 @@ export { bootstrap, BootstrapMethod } from './Bootstrap';
 export { Inject, InjectFactory } from './Inject';
 export { Service, ServiceOptions, IService } from './Service';
 export { Route, RouteOptions, IRoute } from './Route';
+export { Restful, RestfulOptions, MongoField, RestfulFactory, RestfulApi } from './Restful';

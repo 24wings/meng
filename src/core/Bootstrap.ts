@@ -1,12 +1,14 @@
 import { AppOptions } from './App';
 import debug = require('debug');
 import express = require('express');
+import bodyParser = require('body-parser');
 import mongoose = require('mongoose');
 import http = require('http');
 
 import { IService } from './Service';
 import { Inject, InjectFactory } from './Inject';
 import { RouteOptions } from './Route';
+import { RestfulOptions, RestfulFactory, RestfulApi } from './Restful';
 var serverLog = debug('server:');
 
 export function bootstrap(target) {
@@ -29,23 +31,6 @@ class CoreServer {
         this.app = express();
         this.init();
     }
-    /** 
-    resolveService() {
-        this.appOptions.services.forEach(service => {
-            console.log(service, InjectFactory.dependenciesMap);
-            /**
-             * 获取了当前的service类
-             
-            var component = InjectFactory.resolve(service);
-            console.log('component:', component);
-            component.sayHello();
-
-
-        });
-
-    }
-     
-     **/
 
     /**
      * 解析路由层的依赖
@@ -82,14 +67,20 @@ class CoreServer {
 
     init() {
         this.staticPublic();
-        // this.resolveService();
+        this.bodyParser();
         this.resolveRouteDependency();
         this.connectMongo(this.appOptions.mongoUrl);
-        this.appOptions.bootstrap == BootstrapMethod.HTTP ? this.runByHttp() : this.runByExpress();
+        this.appOptions.bootstrap == BootstrapMethod.HTTP ? this.runByHttp() :
+            this.schemaRestful();
+        this.runByExpress();
 
 
     }
+    bodyParser() {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.text());
 
+    }
     /**
      * 静态文件服务器
      */
@@ -123,6 +114,23 @@ class CoreServer {
         mongoose.connect(mongoUrl);
     }
 
+    schemaRestful() {
+        for (var [target, schema] of RestfulFactory.allSchemaTarget()) {
+            var restfulOptions: RestfulOptions =
+                Reflect.getMetadata('RestfulOptions', target);
 
+            this.app.route(restfulOptions.url)
+                .get(RestfulApi.get(RestfulFactory.getModel(target)))
+                .post(RestfulApi.post(RestfulFactory.getModel(target)))
+                .delete(RestfulApi.delete(RestfulFactory.getModel(target)))
+                .put(RestfulApi.put(RestfulFactory.getModel(target)))
+                .options(RestfulApi.options(restfulOptions.schema))
+                ;
+        }
+
+
+
+
+    }
 }
 

@@ -1,1 +1,1 @@
-export { playerSchema, Player } from './PlayerSchema'; 
+export { IPlayer, Player } from './PlayerSchema'; 

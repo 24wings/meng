@@ -1,37 +1,27 @@
-
 import * as mongoose from 'mongoose';
+import { Restful, MongoField, RestfulFactory } from '../core'
 
 
-interface Player extends mongoose.Document {
-    _id: string;
-    name: string;
-    age: Number;
-    isFinishInfo: boolean;
+@Restful({
+    url: '/rest.player',
+    schemaName: 'Player',
+    schema: {
+        name: String
+    },
+    schemaOption: {
 
-}
-
-
-export class PlayerSchema {
-
-    static get schema() {
-        var schema = new mongoose.Schema({
-            name: {
-                type: String,
-                required: true
-            },
-            password: {
-                type: String,
-                required: true
-            },
-            phone: {
-                type: Number,
-                required: true
-            }
-        });
-
-        return schema;
     }
 
+})
+export class Player {
+    name: String = '';
+
 }
-var playerSchema = mongoose.model<Player>("Player", PlayerSchema.schema);
-export { playerSchema, Player };
+
+export interface IPlayer extends Player, mongoose.Document {
+
+}
+
+
+
+
