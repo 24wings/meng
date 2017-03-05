@@ -22,4 +22,4 @@ import { PlayerRoute } from './route/index';
 export class Server {
 }
 
-bootstrap(Server); 
+bootstrap(Server);   
