@@ -6,7 +6,37 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     url: '/rest.player',
     schemaName: 'Player',
     schema: {
-        name: String
+        name: { type: String, default: '昵称' },
+        gender: { type: String, default: '男' },
+        phone: { type: String },
+        password: { type: String },
+        tags: { type: [{ tagName: String }] },
+        age: Number,
+        height: Number,
+        anwsers: {
+            type: [{
+                question: String,
+                value: String
+            }]
+        },
+        creatDt: { type: Date, default: Date.now },
+        filterAge: {
+            type: {
+                label: String,
+                value: String
+            }
+        },
+        filterGender: {
+            type: {
+                label: String,
+                value: String
+            }
+        },
+        filterCity: {
+            label: String,
+            value: String
+        }
+
     },
     schemaOption: {
 

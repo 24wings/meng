@@ -41,7 +41,7 @@ export class PlayerRoute extends IRoute {
             res.json({
                 issuccess: true,
                 data: {
-                    isFinishInfo: player.isFinishInfo
+                    // isFinishInfo: player.isFinishInfo
                 }
             });
         } else {

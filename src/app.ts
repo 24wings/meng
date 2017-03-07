@@ -17,7 +17,8 @@ import { PlayerRoute } from './route/index';
     routes: [PlayerRoute],
     bootstrap: BootstrapMethod.Express,
     staticServer: path.resolve(__dirname, '../public'),
-    mongoUrl: "mongodb://120.77.169.182/test"
+    mongoUrl: "mongodb://120.77.169.182/test",
+    isAllowCrossDomain: true
 })
 export class Server {
 }

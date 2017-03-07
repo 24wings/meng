@@ -87,7 +87,7 @@ export class RestfulApi {
             if (req.query) {
                 var result = await model.find(req.query).remove().exec();
                 res.json({
-                    issucess: true,
+                    issuccess: true,
                     data: result
                 });
 
@@ -126,10 +126,10 @@ export class RestfulApi {
     static options(schemaDefinition: mongoose.SchemaDefinition) {
         return async (req: express.Request, res: express.Response) => {
             console.log(schemaDefinition);
-
+            var json = RestfulApi.parserSchemaToJson(schemaDefinition);
             res.json({
                 issuceess: true,
-                data: JSON.stringify(schemaDefinition)
+                data: json
             });
         }
     }
@@ -143,7 +143,36 @@ export class RestfulApi {
     /**
      * 解析schema成为 JSON数据
      */
-    static parserSchemaToJson() {
+    static parserSchemaToJson(schemaDefinition: mongoose.SchemaDefinition) {
+        var fields = Object.keys(schemaDefinition);
+        schemaDefinition
+        var obj = {};
+        fields.forEach(field => {
+            var type: mongoose.SchemaTypeOpts<any> = schemaDefinition[field];
+            if (Array.isArray(type.type)) {
+                type.type[0].type = RestfulApi.parseType(type[0]);
 
+            } else {
+                type.type = RestfulApi.parseType(type.type);
+            }
+            obj[field] = type;
+
+        });
+
+        return obj;
+    }
+
+
+    static parseType(type: any) {
+
+        if (type == String) {
+            return "String";
+
+        } else if (type == Date) {
+            return "Date";
+
+        } else {
+            return "unkown";
+        }
     }
 }

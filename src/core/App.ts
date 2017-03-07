@@ -18,5 +18,6 @@ export interface AppOptions {
     staticServer?: string;
     bootstrap: BootstrapMethod;
     mongoUrl: string;
+    isAllowCrossDomain?: boolean;
 
 }

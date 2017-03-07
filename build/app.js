@@ -21,7 +21,8 @@ Server = __decorate([
         routes: [index_1.PlayerRoute],
         bootstrap: Bootstrap_1.BootstrapMethod.Express,
         staticServer: path.resolve(__dirname, '../public'),
-        mongoUrl: "mongodb://120.77.169.182/test"
+        mongoUrl: "mongodb://120.77.169.182/test",
+        isAllowCrossDomain: true
     })
 ], Server);
 exports.Server = Server;

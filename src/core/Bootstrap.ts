@@ -24,6 +24,8 @@ export enum BootstrapMethod {
 class CoreServer {
     appOptions: AppOptions;
     app: express.Application;
+
+
     // static mongoInstance:
 
     constructor(appOptions: AppOptions) {
@@ -41,12 +43,7 @@ class CoreServer {
             var routeOptions = Reflect.getMetadata('RouteOptions', RouteClass);
             var router = InjectFactory.resolve(RouteClass);
             console.log('router/', router);
-            // router.hello();
-            // router.hello();
-            // router.hello();
-            // router.hello();
-            // router.hello();
-            // router.hello();
+
 
 
 
@@ -65,8 +62,22 @@ class CoreServer {
         });
     }
 
+    allowCrossDomain(isAllowCrossDomain: boolean) {
+        if (isAllowCrossDomain) {
+            this.app.use((req, res, next) => {
+                res.header('Access-Control-Allow-Origin', '*');
+                res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+                res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+
+                next();
+            });
+        }
+    }
+
+
     init() {
         this.staticPublic();
+        this.allowCrossDomain(this.appOptions.isAllowCrossDomain);
         this.bodyParser();
         this.resolveRouteDependency();
         this.connectMongo(this.appOptions.mongoUrl);
@@ -114,11 +125,12 @@ class CoreServer {
         mongoose.connect(mongoUrl);
     }
 
+
+
     schemaRestful() {
         for (var [target, schema] of RestfulFactory.allSchemaTarget()) {
             var restfulOptions: RestfulOptions =
                 Reflect.getMetadata('RestfulOptions', target);
-
             this.app.route(restfulOptions.url)
                 .get(RestfulApi.get(RestfulFactory.getModel(target)))
                 .post(RestfulApi.post(RestfulFactory.getModel(target)))
@@ -127,10 +139,6 @@ class CoreServer {
                 .options(RestfulApi.options(restfulOptions.schema))
                 ;
         }
-
-
-
-
     }
 }
 
