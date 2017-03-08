@@ -6,13 +6,15 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     url: '/rest.player',
     schemaName: 'Player',
     schema: {
+        currentRecord: { type: mongoose.Schema.Types.ObjectId },
         name: { type: String, default: '昵称' },
         gender: { type: String, default: '男' },
         phone: { type: String },
         password: { type: String },
-        tags: { type: [{ tagName: String }] },
+        tags: { type: [{ tagName: String, result: [String], options: [String] }] },
         age: Number,
         height: Number,
+
         anwsers: {
             type: [{
                 question: String,

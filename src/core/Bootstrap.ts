@@ -122,7 +122,11 @@ class CoreServer {
     }
 
     connectMongo(mongoUrl: string) {
-        mongoose.connect(mongoUrl);
+        var options = {
+            server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+            replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
+        };
+        mongoose.connect(mongoUrl, options);
     }
 
 
@@ -136,7 +140,7 @@ class CoreServer {
                 .post(RestfulApi.post(RestfulFactory.getModel(target)))
                 .delete(RestfulApi.delete(RestfulFactory.getModel(target)))
                 .put(RestfulApi.put(RestfulFactory.getModel(target)))
-                .options(RestfulApi.options(restfulOptions.schema))
+                // .options(RestfulApi.options(restfulOptions.schema))
                 ;
         }
     }

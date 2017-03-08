@@ -7,14 +7,14 @@ import http = require('http');
 var serverLog = debug('server-log:');
 import { App, AppOptions } from './core/App';
 import { bootstrap, BootstrapMethod } from './core/Bootstrap';
-import { PlayerRoute } from './route/index';
 
+import { PlayerRoute, RecordWeekRoute, RecordRoute } from './route';
 
 
 
 @App({
     port: 3000,
-    routes: [PlayerRoute],
+    routes: [PlayerRoute, RecordWeekRoute, RecordRoute],
     bootstrap: BootstrapMethod.Express,
     staticServer: path.resolve(__dirname, '../public'),
     mongoUrl: "mongodb://120.77.169.182/test",
@@ -23,4 +23,4 @@ import { PlayerRoute } from './route/index';
 export class Server {
 }
 
-bootstrap(Server);   
+bootstrap(Server);      
