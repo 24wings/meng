@@ -33,7 +33,7 @@ export class PlayerRoute extends IRoute {
                 return this.notFound;
          */
 
-        var actions = [this.allPlayer, this.getPlayerByPhone, this.getPlayerInfo,]
+        var actions = [this.allPlayer, this.getPlayerByPhone, this.getPlayerInfo]
     }
     async isFinishInfo(req: express.Request, res: express.Response) {
         var player = await this.playerService.getPlayerInfo({ phone: req.query.phone });
@@ -41,7 +41,7 @@ export class PlayerRoute extends IRoute {
             res.json({
                 issuccess: true,
                 data: {
-                    isFinishInfo: player.isFinishInfo
+                    // isFinishInfo: player.isFinishInfo
                 }
             });
         } else {
