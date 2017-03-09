@@ -6,7 +6,8 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     url: '/rest.player',
     schemaName: 'Player',
     schema: {
-        currentRecord: { type: mongoose.Schema.Types.ObjectId },
+        currentRecord: { type: String },
+        records: { type: [String], default: [] },
         name: { type: String, default: '昵称' },
         gender: { type: String, default: '男' },
         phone: { type: String },
@@ -47,6 +48,8 @@ import { Restful, MongoField, RestfulFactory } from '../core'
 })
 export class Player {
     name: String = '';
+    currentRecord = '';
+    records: String[];
 
 }
 

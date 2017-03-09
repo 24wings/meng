@@ -1,18 +1,25 @@
 import mongoose = require('mongoose');
 import { IService, RestfulFactory } from '../core';
-import { IPlayer, Player } from '../schema';
+import { IPlayer, Player, Record, IRecord, playerSchema, recordSchema } from '../schema';
 
-var playerSchema: mongoose.Model<IPlayer> = RestfulFactory.getModel(Player);
+
+
 export class PlayerService extends IService {
     async allPlayer() {
-        return playerSchema.find().populate('[tags]').exec();
+        return playerSchema.find().exec();
     }
-    async getPlayerInfo(query: { phone?: number }) {
+    async getPlayerInfo(query: Object) {
         return playerSchema.findOne(query).exec();
     }
 
-    updatePlayerRecord(query: Object, _id: String) {
+    async updatePlayerRecord(query: Object, _id: String) {
         return playerSchema.update(query, { currentRecord: _id }).exec()
+    }
+
+    async  getCurrentRecord(currentRecord: string) {
+        return recordSchema.findById({ _id: currentRecord }).exec();
+
+
     }
 
 

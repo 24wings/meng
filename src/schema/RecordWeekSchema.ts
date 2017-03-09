@@ -6,7 +6,8 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     url: '/rest.recordWeek',
     schemaName: 'RecordWeek',
     schema: {
-        records: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
+        peoples: { type: [String], default: [] },
+        records: [{ type: String, default: [] }],
         creatDt: { type: Date, default: Date.now },
         finishDt: { type: Date },
         isActive: { type: Boolean, default: true }
@@ -17,8 +18,10 @@ import { Restful, MongoField, RestfulFactory } from '../core'
 
 })
 export class RecordWeek {
+    // _id: String;
     name: String = '';
     records: mongoose.Schema.Types.ObjectId[];
+    peoples: String[];
 
 }
 

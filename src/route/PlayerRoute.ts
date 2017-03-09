@@ -79,5 +79,25 @@ export class PlayerRoute extends IRoute {
 
 
     }
+    async currentRecord(req: express.Request, res: express.Response) {
+        var _id = req.query._id;
+        var result;
+        if (_id) {
+            result = await this.playerService.getPlayerInfo({ _id: _id });
+            console.log(result);
+
+            var record = await this.playerService.getCurrentRecord(result.currentRecord);
+            console.log('record', record);
+            res.json({
+                issuccess: true,
+                data: record
+            });
+        } else {
+            res.json({
+                issuccess: false,
+                data: '参数不合法'
+            })
+        }
+    }
 
 }

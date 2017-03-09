@@ -28,9 +28,12 @@ export class RecordRoute extends IRoute {
             });
             return;
         }
-
+        /**
+         * 1.生成一条参与活动的记录
+         * 2.参与者本身的当前记录也要更新
+         */
         var newRecord = await this.recordService.newRecord(playerid);
-        console.log(newRecord._id);
+
         var actionResult = await this.recordWeekService.pushActiveRecord(newRecord._id);
         var result = await this.playerService.updatePlayerRecord({ _id: playerid }, newRecord._id);
         console.log(newRecord, actionResult, result);
