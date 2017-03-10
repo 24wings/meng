@@ -76,6 +76,7 @@ class CoreServer {
 
 
     init() {
+
         this.staticPublic();
         this.allowCrossDomain(this.appOptions.isAllowCrossDomain);
         this.bodyParser();
@@ -88,8 +89,10 @@ class CoreServer {
 
     }
     bodyParser() {
-        this.app.use(bodyParser.json());
+
         this.app.use(bodyParser.text());
+        this.app.use(bodyParser.json({ limit: '5mb' }));
+        this.app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
     }
     /**

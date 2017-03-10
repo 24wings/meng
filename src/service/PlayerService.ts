@@ -1,6 +1,6 @@
 import mongoose = require('mongoose');
 import { IService, RestfulFactory } from '../core';
-import { IPlayer, Player, Record, IRecord, playerSchema, recordSchema } from '../schema';
+import { IPlayer, Player, Record, IRecord, playerSchema, recordSchema, recordWeekSchema } from '../schema';
 
 
 
@@ -12,12 +12,42 @@ export class PlayerService extends IService {
         return playerSchema.findOne(query).exec();
     }
 
-    async updatePlayerRecord(query: Object, _id: String) {
-        return playerSchema.update(query, { currentRecord: _id }).exec()
+    async updatePlayerRecord(query: Object, currentRecordId: String) {
+        return playerSchema.update(query, { currentRecord: currentRecordId }).exec()
     }
 
     async  getCurrentRecord(currentRecord: string) {
         return recordSchema.findById({ _id: currentRecord }).exec();
+
+
+    }
+
+    async newPlayer(player: Player) {
+        return new playerSchema(player).save();
+
+    }
+
+    /**
+     * 新用户参与记录
+     * @param query 
+     */
+    async joinParty(playerId: String) {
+        /**
+         * 1.查询当前活跃的活动
+         */
+        var activeParty = await recordWeekSchema.findOne({ isActive: true }).exec();
+        if (activeParty) {
+            return activeParty.update({
+                $push: {
+                    peoples: playerId
+                }
+            }).exec();
+
+        } else {
+            throw new Error('没有活跃的用户');
+        }
+
+
 
 
     }

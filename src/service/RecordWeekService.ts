@@ -20,6 +20,7 @@ export class RecordWeekService extends IService {
         return new recordWeekSchema({
 
             isActive: true,
+            state: 0,
             peoples: peoples
         }).save();
     }

@@ -10,6 +10,7 @@ import { Restful, MongoField, RestfulFactory } from '../core'
         records: [{ type: String, default: [] }],
         creatDt: { type: Date, default: Date.now },
         finishDt: { type: Date },
+        state: { type: Number, default: 0 },
         isActive: { type: Boolean, default: true }
     },
     schemaOption: {

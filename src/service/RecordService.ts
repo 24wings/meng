@@ -16,5 +16,30 @@ export class RecordService extends IService {
         }).save();
     }
 
+    async getRecord(_id: String) {
+        return recordSchema.findOne({ _id: _id }).exec()
+
+    }
+    /**
+     * 
+     * @param recordId 
+     * @param toPlayerId 
+     */
+    async updateRecordToPlayerId(recordId: String, toPlayerId: String, state: Number) {
+        return recordSchema.update({ _id: recordId }, {
+            $set: {
+                toPlayerId,
+                state
+            }
+        }).exec();
+
+    }
+
+
+
+
+
+
+
 
 }

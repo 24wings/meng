@@ -8,7 +8,7 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     schema: {
         currentRecord: { type: String },
         records: { type: [String], default: [] },
-        name: { type: String, default: '昵称' },
+        name: { type: String },
         gender: { type: String, default: '男' },
         phone: { type: String },
         password: { type: String },
@@ -19,7 +19,8 @@ import { Restful, MongoField, RestfulFactory } from '../core'
         anwsers: {
             type: [{
                 question: String,
-                value: String
+                value: String,
+                fullLength: Number
             }]
         },
         creatDt: { type: Date, default: Date.now },
