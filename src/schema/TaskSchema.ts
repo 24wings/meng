@@ -6,22 +6,24 @@ import { Restful, MongoField, RestfulFactory } from '../core'
     url: '/rest.task',
     schemaName: 'Task',
     schema: {
-        day: { type: Number, default: 0 },
-        task: { type: String, default: '默认任务' },
+        time: { type: Number, default: 0 },
+        title: { type: String, default: '默认任务' },
+        description: { type: String },
         isFinish: { type: Boolean }
     },
     schemaOption: {
 
     }
 })
-export class Record {
-    name: String = '';
-    toPlayerId: String;
-    state: 0 | 1 | 2 | 3 | 4 | 5;
+export class Task {
+    time: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    title: String;
+    description: String;
+    isFinish: boolean;
 
 }
 
-export interface IRecord extends Record, mongoose.Document {
+export interface ITask extends Task, mongoose.Document {
 
 }
 

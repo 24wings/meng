@@ -18,7 +18,7 @@ let Server = class Server {
 Server = __decorate([
     core_1.App({
         port: 3000,
-        routes: [route_1.PlayerRoute, route_1.RecordWeekRoute, route_1.RecordRoute],
+        routes: [route_1.PlayerRoute, route_1.RecordWeekRoute, route_1.RecordRoute, route_1.TaskRoute],
         bootstrap: Bootstrap_1.BootstrapMethod.Express,
         staticServer: path.resolve(__dirname, '../public'),
         mongoUrl: "mongodb://120.77.169.182/test",

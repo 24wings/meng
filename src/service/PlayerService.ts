@@ -5,6 +5,8 @@ import { IPlayer, Player, Record, IRecord, playerSchema, recordSchema, recordWee
 
 
 export class PlayerService extends IService {
+
+
     async allPlayer() {
         return playerSchema.find().exec();
     }
