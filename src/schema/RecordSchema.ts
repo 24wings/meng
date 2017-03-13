@@ -9,7 +9,7 @@ import { Restful, MongoField, RestfulFactory } from '../core'
         playerId: { type: mongoose.Schema.Types.ObjectId, required: true },
         creatDt: { type: Date, default: Date.now },
         lastUpdaeDt: { type: Date, default: Date.now },
-        state: { type: Number, default: 0 }, // 0 未匹配,1:已经匹配,2:已结束 ,3:已错过,4. 已离开
+        state: { type: Number, default: 0 }, // 0 未参加匹配,1:已经参加匹配但是没有出结果,2:已经参加匹配并且成功匹配上了异性 ,3:已错过当前比赛,不能加入当前比赛,4. 参加了匹配但是没有匹配上,5.正确参与比赛并且完成了比赛
         toPlayerId: { type: String }
 
     },
@@ -21,7 +21,7 @@ import { Restful, MongoField, RestfulFactory } from '../core'
 export class Record {
     name: String = '';
     toPlayerId: String;
-    state: 0 | 1 | 2 | 3 | 4;
+    state: 0 | 1 | 2 | 3 | 4 | 5;
 
 }
 

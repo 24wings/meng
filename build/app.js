@@ -10,13 +10,13 @@ require("reflect-metadata");
 const path = require("path");
 const debug = require("debug");
 var serverLog = debug('server-log:');
-const App_1 = require("./core/App");
+const core_1 = require("./core");
 const Bootstrap_1 = require("./core/Bootstrap");
 const route_1 = require("./route");
 let Server = class Server {
 };
 Server = __decorate([
-    App_1.App({
+    core_1.App({
         port: 3000,
         routes: [route_1.PlayerRoute, route_1.RecordWeekRoute, route_1.RecordRoute],
         bootstrap: Bootstrap_1.BootstrapMethod.Express,
@@ -27,3 +27,7 @@ Server = __decorate([
 ], Server);
 exports.Server = Server;
 Bootstrap_1.bootstrap(Server);
+setTimeout(() => {
+    // var recordSchema: mongoose.Model<IRecord> = RestfulFactory.getModel(Record);
+    // recordSchema.find().remove().exec();                                            
+}, 5000);

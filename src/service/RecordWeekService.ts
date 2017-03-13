@@ -35,7 +35,12 @@ export class RecordWeekService extends IService {
         return recordWeekSchema.findOneAndUpdate({ _id: weekRecord._id }, weekRecord).exec();
 
 
+    }
 
+    updateRecordStateTo(from: number, to: 0 | 1 | 2 | 3 | 4 | 5) {
+        return recordSchema.find({ state: from }).update({
+            state: 5
+        }).exec();
     }
 
 

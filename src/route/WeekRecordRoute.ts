@@ -55,7 +55,7 @@ export class RecordWeekRoute extends IRoute {
             var newRecord = await this.recordService.newRecord(player._id);
             player.currentRecord = newRecord._id;
             await playerSchema.update({ _id: player._id }, player).exec();
-            // await  
+
 
 
         }
@@ -66,10 +66,23 @@ export class RecordWeekRoute extends IRoute {
     }
     async finish(req: express.Request, res: express.Response) {
         var weekRecord = req.body;
+        /**
+         * 更新周记录
+         */
         var result = await this.recordWeekService.finish(weekRecord);
+        /**
+         * 更新每一个已经匹配的用户的记录的状态
+         * 即 所有 record =2 的记录全部改为 record =5
+         */
+        var updateResult = await this.recordWeekService.updateRecordStateTo(2, 5);
+
+
         res.json({
             issuccess: true,
-            data: result
+            data: {
+                finishResult: result,
+                updateRecordResult: updateResult
+            }
         });
     }
 

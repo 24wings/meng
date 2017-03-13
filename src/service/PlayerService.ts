@@ -27,6 +27,14 @@ export class PlayerService extends IService {
 
     }
 
+    isExisit(query: Object) {
+        return playerSchema.findOne(query).exec().then(function (player) {
+            console.log(player);
+            return player ? true : false;
+        });
+
+    }
+
     /**
      * 新用户参与记录
      * @param query 
