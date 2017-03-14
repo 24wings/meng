@@ -60,7 +60,7 @@ class CoreServer {
         // this.gzipServer();
         this.allowCrossDomain(this.appOptions.isAllowCrossDomain);
         this.bodyParser();
-
+        this.scannerRoutes();
         this.connectMongo(this.appOptions.mongoUrl);
         this.appOptions.bootstrap == BootstrapMethod.HTTP ? this.runByHttp() : this.runByExpress();
         this.schemaRestful();
@@ -115,11 +115,35 @@ class CoreServer {
     }
 
     scannerRoutes() {
-        this.appOptions.routes.forEach((RouteClass: any) => {
+
+        /**
+ * 解析路由层的依赖
+ */
+
+
+        this.appOptions.routes.forEach(RouteClass => {
             var routeOptions = Reflect.getMetadata('RouteOptions', RouteClass);
+            // var router = InjectFactory.resolve(RouteClass);
             var router = new RouteClass();
+            console.log('router/', router);
+
+
+
+
+            var func: Function = router.hello;
+            // func.bind(router)();
+            // 扫描原型链上的所有方法
+            Object.getOwnPropertyNames(RouteClass.prototype).forEach(methodName => {
+                if (methodName == "constructor") return;
+                else {
+                    this.app.use(`${routeOptions.path}/${methodName}`, router[methodName].bind(router));
+                    serverLog(`Scanner request url:${routeOptions.path}/${methodName}`);
+                }
+            })
+
 
         });
+
     }
 
     connectMongo(mongoUrl: string) {
