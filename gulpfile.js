@@ -22,9 +22,9 @@ gulp.task("compile", function() {
 gulp.task("nodemon", function() {
     nodemon({
         script: "build/app",
-        exec: ' set DEBUG=*,-not_this &node --debug',
+        exec: ' set DEBUG=*,-not_this &node --debug ',
         env: {
-            'NODE_ENV': 'development'
+            'NODE_ENV': 'production'
         }
 
     });

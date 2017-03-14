@@ -1,12 +1,12 @@
 import express = require('express');
-import { Inject } from '../core/Inject';
-import { Route, IRoute } from '../core/Route';
-import { PlayerService, RecordService, RecordWeekService } from '../service';
 
-@Inject(PlayerService, RecordService, RecordWeekService)
+import { Route, IRoute } from '../core/Route';
+import { PlayerService, RecordService, RecordWeekService, playerService, recordService, recordWeekService } from '../service';
+
+
 @Route({
     path: '/player',
-    services: [PlayerService, RecordService, RecordWeekService]
+    services: []
 })
 export class PlayerRoute extends IRoute {
     constructor(
@@ -41,9 +41,9 @@ export class PlayerRoute extends IRoute {
     async state(req: express.Request, res: express.Response, ) {
         var _id = req.query._id;
         if (req.query._id) {
-            var player = await this.playerService.getPlayerInfo({ _id });
-            var currentRecord = await this.playerService.getCurrentRecord(player.currentRecord);
-            var toPlayer = await this.playerService.getPlayerInfo({ _id: currentRecord.toPlayerId });
+            var player = await playerService.getPlayerInfo({ _id });
+            var currentRecord = await playerService.getCurrentRecord(player.currentRecord);
+            var toPlayer = await playerService.getPlayerInfo({ _id: currentRecord.toPlayerId });
             res.json({
                 issuccess: true,
                 data: {
@@ -71,7 +71,7 @@ export class PlayerRoute extends IRoute {
         } else {
             var player = req.body;
             var phone = req.body.phone;
-            var isPlayerExist = await this.playerService.isExisit({ phone });
+            var isPlayerExist = await playerService.isExisit({ phone });
             if (isPlayerExist) {
                 res.json({
                     issuccess: false,
@@ -82,14 +82,14 @@ export class PlayerRoute extends IRoute {
                  * 1.创建新用户
                  */
 
-                var savePlayerResult = await this.playerService.newPlayer(player);
+                var savePlayerResult = await playerService.newPlayer(player);
 
                 /**
                  * 2.创建临时记录
                  */
-                var newRecord = await this.recordService.newRecord(savePlayerResult._id);
+                var newRecord = await recordService.newRecord(savePlayerResult._id);
                 try {
-                    var joinPartyResult = await this.playerService.joinParty(savePlayerResult._id);
+                    var joinPartyResult = await playerService.joinParty(savePlayerResult._id);
                 } catch (e) {
 
                     await newRecord.update({ state: 3 }).exec()
@@ -102,7 +102,7 @@ export class PlayerRoute extends IRoute {
                 /**
                  * 3.更新用户的当前记录
                  */
-                var updatePlayerRecordResult = this.playerService.updatePlayerRecord({ _id: savePlayerResult._id }, newRecord._id);
+                var updatePlayerRecordResult = playerService.updatePlayerRecord({ _id: savePlayerResult._id }, newRecord._id);
 
                 res.json({
                     issuccess: true,
@@ -113,7 +113,7 @@ export class PlayerRoute extends IRoute {
     }
 
     async isFinishInfo(req: express.Request, res: express.Response) {
-        var player = await this.playerService.getPlayerInfo({ phone: req.query.phone });
+        var player = await playerService.getPlayerInfo({ phone: req.query.phone });
         if (player) {
             res.json({
                 issuccess: true,
@@ -133,7 +133,7 @@ export class PlayerRoute extends IRoute {
     }
 
     async getPlayerInfo(req: express.Request, res: express.Response) {
-        var info = await this.playerService.getPlayerInfo({ phone: req.query.phone });
+        var info = await playerService.getPlayerInfo({ phone: req.query.phone });
         res.json({
             issuccess: true,
             data: info
@@ -142,7 +142,7 @@ export class PlayerRoute extends IRoute {
     }
 
     async allPlayer(req: express.Request, res: express.Response) {
-        var players = await this.playerService.allPlayer();
+        var players = await playerService.allPlayer();
         res.json({
             issuccess: true,
             data: players
@@ -158,10 +158,10 @@ export class PlayerRoute extends IRoute {
         var _id = req.query._id;
         var result;
         if (_id) {
-            result = await this.playerService.getPlayerInfo({ _id: _id });
+            result = await playerService.getPlayerInfo({ _id: _id });
             console.log(result);
 
-            var record = await this.playerService.getCurrentRecord(result.currentRecord);
+            var record = await playerService.getCurrentRecord(result.currentRecord);
             console.log('record', record);
             res.json({
                 issuccess: true,

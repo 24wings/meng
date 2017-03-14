@@ -1,12 +1,12 @@
 import express = require('express');
-import { Inject } from '../core/Inject';
-import { Route, IRoute } from '../core/Route';
-import { RecordService, PlayerService, RecordWeekService } from '../service';
 
-@Inject(RecordService, PlayerService, RecordWeekService)
+import { Route, IRoute } from '../core/Route';
+import { RecordService, PlayerService, RecordWeekService, recordService, playerService, recordWeekService } from '../service';
+
+
 @Route({
     path: '/record',
-    services: [RecordService, PlayerService, RecordWeekService]
+    services: []
 })
 export class RecordRoute extends IRoute {
     constructor(
@@ -32,10 +32,10 @@ export class RecordRoute extends IRoute {
          * 1.生成一条参与活动的记录
          * 2.参与者本身的当前记录也要更新
          */
-        var newRecord = await this.recordService.newRecord(playerid);
+        var newRecord = await recordService.newRecord(playerid);
 
-        var actionResult = await this.recordWeekService.pushActiveRecord(newRecord._id);
-        var result = await this.playerService.updatePlayerRecord({ _id: playerid }, newRecord._id);
+        var actionResult = await recordWeekService.pushActiveRecord(newRecord._id);
+        var result = await playerService.updatePlayerRecord({ _id: playerid }, newRecord._id);
         console.log(newRecord, actionResult, result);
         res.json({
             issuccess: true,

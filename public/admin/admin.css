@@ -1,0 +1,239 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+.card.customClass,
+.card.customClass .card-header,
+.panel.customClass {
+    background-color: #282828;
+    color: #fff;
+}
+
+.panel.customClass .panel-body {
+    border-top: none !important;
+    background-color: #282828;
+}
+
+.card {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-radius: 7px;
+    position: relative;
+    margin-bottom: 24px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    padding: 14px 22px;
+    margin-top: 44px;
+}
+
+.card .card-header {
+    color: #fff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    padding: 14px 22px;
+    background-color: transparent;
+}
+
+.card .card-title {
+    font-weight: 400;
+    font-size: 26px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    color: #fff;
+}
+
+.content-top {
+    padding-top: 36px;
+    padding-bottom: 75px;
+}
+
+.card-body {
+    margin-bottom: 200px;
+}
+
+.content-title {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    color: #fff;
+    float: left;
+    width: auto;
+    margin-left: 122px;
+    padding: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.al-breadcrumb {
+    background: none;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    float: right;
+    margin-right: 100px;
+    padding-top: 11px;
+}
+
+.breadcrumb-item {
+    float: left;
+}
+
+.breadcrumb-item+.breadcrumb-item:before {
+    display: inline-block;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    color: #818a91;
+    content: "/";
+}
+
+#page-content a {
+    color: #4dc4ff;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+
+.smart-table {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #606c71;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+    word-break: normal;
+    word-break: keep-all;
+    background-color: transparent;
+}
+
+.smart-table thead {
+    color: #fff;
+}
+
+.smart-table tr {
+    color: #fff;
+}
+
+.fa {
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+sidebar .card-title {
+    font-size: 16px !important;
+}
+
+::-webkit-input-placeholder {
+    /* Chrome */
+    color: #fff;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #fff;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #fff;
+    opacity: 1;
+}
+
+:-moz-placeholder {
+    /* Firefox 4 - 18 */
+    color: #fff;
+    opacity: 1;
+}
+
+.page-top {
+    background-color: #282828;
+    position: fixed;
+    z-index: 904;
+    box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
+    height: 66px;
+    width: 100%;
+    min-width: 320px;
+    padding: 0 32px 0 40px;
+}
+
+.logo {
+    color: #00abff;
+    font-size: 24px;
+    line-height: 60px;
+}
+
+.hover-color {
+    color: #fff;
+}
+
+.hover-color:hover {
+    color: #00abff;
+}
+
+.al-sidebar {
+    width: 180px;
+    top: 66px;
+    left: 0;
+    z-index: 1001;
+    display: block;
+    min-height: 100%;
+    background-color: #282828;
+    height: 100%;
+    position: fixed;
+}
+
+.al-sidebar-list {
+    margin: 0;
+    overflow: hidden;
+    padding: 18px 0 0 0;
+    list-style: none;
+}
+
+.al-sidebar-list-item {
+    display: block;
+    position: relative;
+    float: none;
+    padding: 0;
+}
+
+a.al-sidebar-list-link {
+    display: block;
+    height: 42px;
+    padding-left: 18px;
+    text-shadow: none;
+    font-size: 13px;
+    text-decoration: none;
+    color: #fff;
+    line-height: 42px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+a.al-sidebar-list-link:hover {
+    color: #00abff;
+}
+
+.al-sidebar-list-link .fa {
+    margin-right: 18px;
+    width: 16px;
+    display: inline-block;
+}

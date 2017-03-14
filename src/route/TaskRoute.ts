@@ -1,12 +1,12 @@
 import express = require('express');
 import { playerService, recordService, recordWeekService, PlayerService } from '../service';
 import { taskSchema } from '../schema/index';
-import { Route, Inject } from '../core';
+import { Route } from '../core';
 
-@Inject(PlayerService)
+
 @Route({
     path: '/task',
-    services: [PlayerService]
+    services: []
 })
 export class TaskRoute {
 
