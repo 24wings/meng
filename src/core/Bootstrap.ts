@@ -10,33 +10,11 @@ import mongoose = require('mongoose');
 import http = require('http');
 import path = require('path');
 import { IService } from './Service';
-import { Inject, InjectFactory } from './Inject';
+
 import { RouteOptions } from './Route';
 import { RestfulOptions, RestfulFactory, RestfulApi } from './Restful';
 var serverLog = debug('server:');
-var Compress = {
-    match: /css|js|html/ig
-};
-export var types = {
-    "css": "text/css",
-    "gif": "image/gif",
-    "html": "text/html",
-    "ico": "image/x-icon",
-    "jpeg": "image/jpeg",
-    "jpg": "image/jpeg",
-    "js": "text/javascript",
-    "json": "application/json",
-    "pdf": "application/pdf",
-    "png": "image/png",
-    "svg": "image/svg+xml",
-    "swf": "application/x-shockwave-flash",
-    "tiff": "image/tiff",
-    "txt": "text/plain",
-    "wav": "audio/x-wav",
-    "wma": "audio/x-ms-wma",
-    "wmv": "video/x-ms-wmv",
-    "xml": "text/xml"
-};
+
 
 export function bootstrap(target) {
     var appOptions: AppOptions = Reflect.getMetadata('AppOptions', target);
@@ -66,74 +44,13 @@ class CoreServer {
     allowCrossDomain(isAllowCrossDomain: boolean) {
         if (isAllowCrossDomain) {
             this.app.use((req, res, next) => {
-                // res.header('Access-Control-Allow-Origin', '*');
-                // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-                // res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+                res.header('Access-Control-Allow-Origin', '*');
+                res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+                res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
                 next();
             });
         }
-    }
-    gzipServer() {
-        this.app.use((req, res, next) => {
-            // res.removeHeader()
-            var pathname = url.parse(req.url).pathname;
-            /**
-             * 静态文件根目录
-             */
-            var realPath = path.resolve(__dirname, '../../public/', '.' + pathname);
-            console.log(realPath);
-
-            fs.exists(realPath, (isExists) => {
-
-                if (!isExists) {
-                    res.writeHead(404, {
-                        'Content-Type': 'text/plain'
-                    });
-                    res.write("This request URL " + pathname + " was not found on this server.");
-                    res.end();
-                } else {
-                    console.log(realPath);
-                    fs.readFile(realPath, "binary", function (err, file) {
-                        console.log(err, file);
-                        if (err) {
-                            res.writeHead(500, {
-                                'Content-Type': 'text/plain'
-                            });
-
-                            res.end(err);
-                        } else {
-                            /**
-                             * 查找媒体类型
-                            */
-                            var ext = path.extname(realPath);
-                            ext = ext ? ext.slice(1) : 'unknown';
-                            var contentType = types[ext] || "text/plain";
-
-                            res.writeHead(200, { 'Content-Type': contentType });
-                            var raw = fs.createReadStream(realPath);
-                            var acceptEncoding = req.headers['accept-encoding'] || "";
-                            var matched = ext.match(Compress.match);
-                            if (matched && acceptEncoding.match(/\bgzip\b/)) {
-                                res.writeHead(200, "Ok", {
-                                    'Content-Encoding': 'gzip'
-                                });
-                                raw.pipe(zlib.createGzip()).pipe(res);
-                            } else if (matched && acceptEncoding.match(/\bdeflate\b/)) {
-                                res.writeHead(200, "Ok", {
-                                    'Content-Encoding': 'deflate'
-                                });
-                                raw.pipe(zlib.createDeflate()).pipe(res);
-                            } else {
-                                res.writeHead(200, "Ok");
-                                raw.pipe(res);
-                            }
-                        }
-                    });
-                }
-            });
-            next();
-        });
     }
 
 

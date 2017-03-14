@@ -1,23 +1,20 @@
 import mongoose = require('mongoose');
 import express = require('express');
-import { Inject } from '../core/Inject';
+
 import { Route, IRoute } from '../core/Route';
-import { RecordWeekService, PlayerService, RecordService } from '../service';
+import { RecordWeekService, PlayerService, RecordService, recordService, playerService, recordWeekService } from '../service';
 import { RestfulFactory } from '../core';
 import { IPlayer, Player, playerSchema, recordWeekSchema, RecordWeek, IRecordWeek } from '../schema';
 
 
 
-@Inject(RecordWeekService, PlayerService, RecordService)
+
 @Route({
     path: '/recordWeek',
-    services: [RecordWeekService, PlayerService, RecordService]
+    services: []
 })
 export class RecordWeekRoute extends IRoute {
-    constructor(
-        public recordWeekService: RecordWeekService,
-        public playerService: PlayerService,
-        public recordService: RecordService) {
+    constructor() {
         super();
         var actions = [this.newRecordWeek];
     }
@@ -42,17 +39,17 @@ export class RecordWeekRoute extends IRoute {
     }
 
     async newRecordWeek(req: express.Request, res: express.Response) {
-        var result = await this.recordWeekService.newRecordWeek();
+        var result = await recordWeekService.newRecordWeek();
         /**
          * 将数据库每个人的当前状态存入以前的状态
          * 
          */
-        var allPlayer = await this.playerService.allPlayer();
+        var allPlayer = await playerService.allPlayer();
         for (var i = 0; i < allPlayer.length; i++) {
             var player = allPlayer[i];
             console.log(player);
             player.records.push(player.currentRecord);
-            var newRecord = await this.recordService.newRecord(player._id);
+            var newRecord = await recordService.newRecord(player._id);
             player.currentRecord = newRecord._id;
             await playerSchema.update({ _id: player._id }, player).exec();
 
@@ -69,12 +66,12 @@ export class RecordWeekRoute extends IRoute {
         /**
          * 更新周记录
          */
-        var result = await this.recordWeekService.finish(weekRecord);
+        var result = await recordWeekService.finish(weekRecord);
         /**
          * 更新每一个已经匹配的用户的记录的状态
          * 即 所有 record =2 的记录全部改为 record =5
          */
-        var updateResult = await this.recordWeekService.updateRecordStateTo(2, 5);
+        var updateResult = await recordWeekService.updateRecordStateTo(2, 5);
 
 
         res.json({
@@ -110,8 +107,8 @@ export class RecordWeekRoute extends IRoute {
                 /**
                  * 2. 已经匹配的人将匹配状态修改 
                  */
-                var updateBoyRecordAction = await this.recordService.updateRecordToPlayerId(pair.boy.currentRecord, pair.girl._id, 2);
-                var updateGirlRecordAction = await this.recordService.updateRecordToPlayerId(pair.girl.currentRecord, pair.boy._id, 2);
+                var updateBoyRecordAction = await recordService.updateRecordToPlayerId(pair.boy.currentRecord, pair.girl._id, 2);
+                var updateGirlRecordAction = await recordService.updateRecordToPlayerId(pair.girl.currentRecord, pair.boy._id, 2);
 
             }
             /**
@@ -119,7 +116,7 @@ export class RecordWeekRoute extends IRoute {
              */
             for (var i = 0; i < looseMatchBoys.length; i++) {
                 var looseBoy = looseMatchBoys[i];
-                var updateLooseBoyAction = await this.recordService.updateRecordToPlayerId(looseBoy.currentRecord, '', 4);
+                var updateLooseBoyAction = await recordService.updateRecordToPlayerId(looseBoy.currentRecord, '', 4);
             }
 
             /**

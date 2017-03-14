@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import compression = require('compression');
-import './test';
+// import './test';
+
 import { Compress } from './test/config';
 import { types } from './test/mime';
 
@@ -24,7 +25,7 @@ import { PlayerRoute, RecordWeekRoute, RecordRoute, TaskRoute } from './route';
 
 
 @App({
-    port: 3000,
+    port: 5000,
     routes: [PlayerRoute, RecordWeekRoute, RecordRoute, TaskRoute],
     bootstrap: BootstrapMethod.Express,
     staticServer: path.resolve(__dirname, '../public'),

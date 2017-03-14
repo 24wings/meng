@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
-require("./test");
 const path = require("path");
 const debug = require("debug");
 var serverLog = debug('server-log:');
@@ -18,7 +17,7 @@ let Server = class Server {
 };
 Server = __decorate([
     core_1.App({
-        port: 3000,
+        port: 5000,
         routes: [route_1.PlayerRoute, route_1.RecordWeekRoute, route_1.RecordRoute, route_1.TaskRoute],
         bootstrap: Bootstrap_1.BootstrapMethod.Express,
         staticServer: path.resolve(__dirname, '../public'),
