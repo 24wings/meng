@@ -40,10 +40,11 @@ export class PlayerRoute extends IRoute {
     }
     async state(req: express.Request, res: express.Response, ) {
         var _id = req.query._id;
-        if (req.query._id) {
+        if (_id) {
             var player = await playerService.getPlayerInfo({ _id });
             var currentRecord = await playerService.getCurrentRecord(player.currentRecord);
-            var toPlayer = await playerService.getPlayerInfo({ _id: currentRecord.toPlayerId });
+            if (currentRecord.toPlayerId) var toPlayer = await playerService.getPlayerInfo({ _id: currentRecord.toPlayerId + '' });
+
             res.json({
                 issuccess: true,
                 data: {

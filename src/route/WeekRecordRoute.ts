@@ -4,7 +4,7 @@ import express = require('express');
 import { Route, IRoute } from '../core/Route';
 import { RecordWeekService, PlayerService, RecordService, recordService, playerService, recordWeekService } from '../service';
 import { RestfulFactory } from '../core';
-import { IPlayer, Player, playerSchema, recordWeekSchema, RecordWeek, IRecordWeek } from '../schema';
+import { IPlayer, Player, playerSchema, recordWeekSchema, RecordWeek, IRecordWeek, recordSchema } from '../schema';
 
 
 
@@ -45,6 +45,10 @@ export class RecordWeekRoute extends IRoute {
          * 
          */
         var allPlayer = await playerService.allPlayer();
+        await recordSchema.update({}, { $set: { state: 0 } }, {
+            multi: true
+        }).exec();
+        /*
         for (var i = 0; i < allPlayer.length; i++) {
             var player = allPlayer[i];
             console.log(player);
@@ -52,10 +56,8 @@ export class RecordWeekRoute extends IRoute {
             var newRecord = await recordService.newRecord(player._id);
             player.currentRecord = newRecord._id;
             await playerSchema.update({ _id: player._id }, player).exec();
-
-
-
         }
+        */
         res.json({
             issuccess: true,
             data: result
@@ -69,9 +71,9 @@ export class RecordWeekRoute extends IRoute {
         var result = await recordWeekService.finish(weekRecord);
         /**
          * 更新每一个已经匹配的用户的记录的状态
-         * 即 所有 record =2 的记录全部改为 record =5
+         * 即 所有 record =2 的记录全部改为 record =0
          */
-        var updateResult = await recordWeekService.updateRecordStateTo(2, 5);
+        var updateResult = await recordWeekService.updateRecordStateTo(0);
 
 
         res.json({
@@ -116,7 +118,7 @@ export class RecordWeekRoute extends IRoute {
              */
             for (var i = 0; i < looseMatchBoys.length; i++) {
                 var looseBoy = looseMatchBoys[i];
-                var updateLooseBoyAction = await recordService.updateRecordToPlayerId(looseBoy.currentRecord, '', 4);
+                var updateLooseBoyAction = await recordService.updateRecordToPlayerId(looseBoy.currentRecord, '', 3);
             }
 
             /**

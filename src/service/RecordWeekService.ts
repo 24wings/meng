@@ -16,6 +16,11 @@ export class RecordWeekService extends IService {
          */
         var allPlayer = await playerSchema.find().exec();
         var peoples = allPlayer.map(player => player._id);
+        await recordSchema.update({}, { state: 0 }).exec();
+        /**
+         * 把所有记录全部存进去
+         */
+
 
         return new recordWeekSchema({
 
@@ -32,14 +37,17 @@ export class RecordWeekService extends IService {
         return activRecordWeek.update(activRecordWeek).exec();
     }
     async finish(weekRecord: IRecordWeek) {
+        await recordSchema.find().update({}, { $set: { state: 0 } }).exec();
         return recordWeekSchema.findOneAndUpdate({ _id: weekRecord._id }, weekRecord).exec();
 
 
     }
 
-    updateRecordStateTo(from: number, to: 0 | 1 | 2 | 3 | 4 | 5) {
-        return recordSchema.find({ state: from }).update({
-            state: 5
+    updateRecordStateTo(to: 0 | 1 | 2 | 3 | 4 | 5) {
+        return recordSchema.find().update({
+            $set: {
+                state: 0
+            }
         }).exec();
     }
 
